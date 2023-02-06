@@ -16,10 +16,10 @@ class Category(MPTTModel):
     parent = TreeForeignKey('self',blank=True, null=True ,related_name='children', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     keywords = models.CharField(max_length=255)
-    description = models.TextField(max_length=255)
+    description = models.CharField(max_length=255)
     image=models.ImageField(blank=True,upload_to='images/')
     status=models.CharField(max_length=10, choices=STATUS)
-    slug = models.SlugField(null=False, unique=True)
+    slug = models.SlugField()
     create_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
 
@@ -32,21 +32,15 @@ class Category(MPTTModel):
     class Meta:
         verbose_name_plural = 'Categories'
 
-    def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'slug': self.slug})
-
-    def __str__(self):                           # __str__ method elaborated later in
-        full_path = [self.title]                  # post.  use __unicode__ in place of
-        k = self.parent
-        while k is not None:
-            full_path.append(k.title)
-            k = k.parent
-        return ' / '.join(full_path[::-1])
-
 class Product(models.Model):
+    DELETED = 'deleted'
+    ACTIVE = 'active'
     STATUS = (
         ('True', 'True'),
         ('False', 'False'),
+        ('DELETED', 'deleted'),
+        ('DRAFT', 'draft'),
+        ('ACTIVE', 'Active'),
     )
 
     VARIANTS = (
@@ -66,8 +60,8 @@ class Product(models.Model):
     minamount=models.IntegerField(default=3, blank=True, null=True)
     variant=models.CharField(max_length=10,choices=VARIANTS, default='None')
     detail=RichTextUploadingField(blank=True, null=True)
-    slug = models.SlugField(null=False, unique=True)
-    status=models.CharField(max_length=10,choices=STATUS)
+    slug = models.SlugField(max_length=50)
+    status=models.CharField(max_length=10,choices=STATUS, default=ACTIVE)
     create_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
     def __str__(self):

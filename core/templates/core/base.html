@@ -1,3 +1,5 @@
+{% load menu %}
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -9,7 +11,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>HWT</title>
+      <title>{% block title %} {% endblock %}</title>
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
@@ -37,18 +39,179 @@
       <link rel="stylesheet" href="{% static '' %}css/owl.carousel.min.css">
       <link rel="stylesoeet" href="{% static '' %}css/owl.theme.default.min.css">
       <link rel="stylesheet" href="{% static '' %}https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      {% block meta %}
+      {% endblock %}
    </head>
    <body>
-   {% block head %}
-   {% endblock %}
-
-   {% block content %}
-   {% endblock %}
+   <!-- banner bg main start -->
+    <div class="banner_bg_main">
+      <!-- header top section start -->
+          <div class="container">
+                  <div class="header_section_top">
+                      <div class="row">
+                          <div class="col-sm-12">
+                          <div class="custom_menu">
+                              <ul>
+                                  <li><a href="{% static '' %}#">Best Sellers</a></li>
+                                  <li><a href="{% static '' %}#">Gift Ideas</a></li>
+                                  <li><a href="{% static '' %}#">New Releases</a></li>
+                                  <li><a href="{% static '' %}#">Today's Deals</a></li>
+                                  <li><a href="{% static '' %}#">Customer Service</a></li>
+                              </ul>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- header top section start -->
+              <!-- logo section start -->
+              <div class="logo_section">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-1">
+                          <div class="logo"><a href="/"><img src="{% static '' %}images/HWT-LOGO.png"></a></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- logo section end -->
+              <!-- header section start -->
+              <div class="header_section">
+                  <div class="container">
+                      <div class="containt_main">
+                          <div id="mySidenav" class="sidenav">
+                          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                          <a href="{% url 'login' %}">Login</a>
+                          <a href="{% static '' %}fashion.html">Fashion</a>
+                          <a href="{% static '' %}electronic.html">Electronic</a>
+                          <a href="{% static '' %}jewellery.html">Jewellery</a>
+                          </div>
+                          <span class="toggle_icon" onclick="openNav()"><img src="{% static '' %}images/toggle-icon.png"></span>
+                          <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Category 
+                          </button>
+                          <!-- category nav start -->
+                          {% load mptt_tags %}
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                             <ul class="col-lg-4">
+                                {% menu %}
+                              </ul>
+                          </div>
+                          <!-- category nav end -->
+                          
+                          </div>
+                          <div class="main">
+                          <!-- Another variation with a button -->
+                          <form method="get" action="/search/">
+                                <div class="input-group">
+                                    <input type="search" name="query" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary" type="button" style="background-color: #f26522; border-color:#f26522 ">
+                                        <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                          </div>
+                          <div class="header_box">
+                          <div class="lang_box ">
+                              <a href="{% static '' %}#" title="Language" class="nav-link" data-toggle="dropdown" aria-expanded="true">
+                              <img src="{% static '' %}images/flag-uk.png" alt="flag" class="mr-2 " title="United Kingdom"> English <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
+                              </a>
+                              <div class="dropdown-menu ">
+                                  <a href="{% static '' %}#" class="dropdown-item">
+                                  <img src="{% static '' %}images/flag-france.png" class="mr-2" alt="flag">
+                                  French
+                                  </a>
+                              </div>
+                          </div>
+                          <div class="login_menu">
+                              <ul>
+                                  <li><a href="{% static '' %}#">
+                                      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                      <span class="padding_10">Cart</span></a>
+                                  </li>
+                                  {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'myaccount' %}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <span class="padding_10">My account</span></a>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="{% url 'login' %}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <span class="padding_10">Login</span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% if request.user.is_authenticated %}
+                                        <li><a href="{% url 'my_store' %}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <span class="padding_10"> My Store</span></a>
+                                        </li>
+                                    {% endif %}
+                              </ul>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- header section end -->
+              <!-- banner section start -->
+              <div class="banner_section layout_padding">
+                  <div class="container">
+                      <div id="my_slider" class="carousel slide" data-ride="carousel">
+                          <div class="carousel-inner">
+                          <div class="carousel-item active">
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <h1 class="banner_taital">Get Started <br>Your favorite shoping market</h1>
+                                      <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="carousel-item">
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <h1 class="banner_taital">Quick pick <br>check out newest products</h1>
+                                      <div class="buynow_bt"><a href="{% static '' %}#">Buy New</a></div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="carousel-item">
+                             <div class="row">
+                                 <div class="col-sm-12">
+                                     <h1 class="banner_taital">View stores <br>check out your favorite stores</h1>
+                                     <div class="buynow_bt"><a href="{% static '' %}#">View</a></div>
+                                 </div>
+                             </div>
+                         </div>
+                          <div class="carousel-item">
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <h1 class="banner_taital">Get Started <br>Open your online store</h1>
+                                      <div class="buynow_bt"><a href="{% static '' %}#">register</a></div>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
+                          <i class="fa fa-angle-left"></i>
+                          </a>
+                          <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
+                          <i class="fa fa-angle-right"></i>
+                          </a>
+                      </div>
+                  </div>
+          </div>
+          <!-- banner section end -->
+      </div>
+      
+      <!-- jewellery  section end -->
+         {% block content %}
+         {% endblock %}
 
       <!-- footer section start -->
       <div class="footer_section layout_padding">
          <div class="container">
-            <div class="footer_logo col-sm-1 flex-center"><a href="{% static '' %}index.html"><img src="{% static '' %}images/HWT-LOGO.png"></a></div>
             <div class="input_bt">
                <input type="text" class="mail_bt" placeholder="Your Email" name="Your Email">
                <span class="subscribe_bt" id="basic-addon2"><a href="{% static '' %}#">Subscribe</a></span>

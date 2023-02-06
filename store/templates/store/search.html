@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block title %}
+   Search
+{% endblock %}
+
+{% block content %}
+<!-- electronic section start -->
+<div class="fashion_section">
+   <div id="">
+      <div class="carousel-inner">
+         <div class="carousel-item active">
+            <div class="container">
+               <div class="fashion_section_2 flex">
+                <h1 class="shirt_text" style="color:rgb(16, 15, 21);">Search results for "{{ query }}":</h1>
+                {% if products %}
+                  <div class="row">
+                     {% for product in products %}
+                        <div class="col-lg-4 col-sm-4">
+                           <div class="box_main">
+                              <a href="{% url 'product_detail' product.category.slug product.slug %}">
+                                 <h1 class="shirt_text" style="color:rgb(38, 0, 255);">{% firstof product.user.get_full_name product.user.username %}</h1>
+                                 <hr>
+                                 <h4 class="shirt_text">{{ product.title }}</h4>
+                                 <p class="price_text">Price  <span style="color: #262626;">K{{ product.get_display_price }}</span></p>
+                                 <div class="electronic_img"><img src="{{ product.image.url }}" alt="Image of {{ product.title }}"></div>
+                                 <div class="btn_main">
+                                    <div class="buy_bt"><a href="{% static '' %}#">Buy Now</a></div>
+                                    <div class="seemore_bt"><a href="">View similar products</a></div>
+                                 </div>
+                              </a>
+                           </div>
+                        </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                    <p>There is no product matching this query 😔</p>
+                {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'userprofile/header.html' %}
+
+{% block content %}
+    {% load static %}
+    <body>
+        <div class="background">
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        {% load crispy_forms_tags %}         
+
+        <!--Register--> 
+        <div class="container">
+            
+            <form method="POST">
+                <a href="frontpage">Home</a>
+                <h1>Register</h1>
+                {% csrf_token %}
+                {{ register_form|crispy }}                    
+                <button class="btn btn-primary" type="submit">Register</button>
+                <p>If you already have an account, <a href="/login">login</a> instead.</p>
+            </form>
+        </div>
+    </body>
+{% endblock %}
