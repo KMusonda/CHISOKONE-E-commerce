@@ -1,7 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -16,16 +15,18 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.db.models.query_utils import Q
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic import CreateView
 
 from .models import Userprofile
 from .forms import NewUserForm
 
 from store.forms import ProductForm
-from store.models import Product, Category
+from store.models import Product, Category, Order, OrderItem
 
 def vendor_detail(request, pk):
     user = User.objects.get(pk=pk)
-    products = user.products.filter(status=Product.ACTIVE)
+    products = user.products.filter(status=Product.ACTIVE)# status=Product.ACTIVE to show only active products
 
     return render(request, 'userprofile/vendor_detail.html', {
         'user': user,
@@ -34,10 +35,21 @@ def vendor_detail(request, pk):
 
 @login_required
 def my_store(request):
-    products = request.user.products.exclude(status=Product.DELETED)
+	products = request.user.products.exclude(status=Product.DELETED)
+	order_items = OrderItem.objects.filter(product__user=request.user) # to get all of the order items
 
-    return render(request, 'userprofile/my_store.html', {
-        'products': products
+	return render(request, 'userprofile/my_store.html', {
+		'products': products,
+		'order_items': order_items,
+	})
+
+@login_required
+def my_store_order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+
+    return render(request, 'userprofile/my_store_order_detail.html', {
+        'order': order,
+
     })
 
 @login_required
@@ -111,6 +123,7 @@ def register_request(request):
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="userprofile/register.html", context={"register_form":form})
+
 
 def login_request(request):
 	if request.method == "POST":

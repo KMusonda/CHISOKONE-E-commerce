@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CART_SESSION_ID = 'cart'
+SESSION_COOKIE_AGE = 604800
+
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
 LOGOUT_REDIRECT_URL = 'frontpage'
 
@@ -47,6 +51,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
+    'phone_field',
+    'heroicons',
+    'vendors',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +68,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'vendor.urls'
 
+WEBSITE_URL = 'http://127.0.0.1:8000/'
+
+STRIPE_PUB_KEY = 'pk_test_51MafUtBqYPEKkMvL5knR1JmDy3IZnAE6PNpoz8CdlSbmKpTvaQvQ90cupqRSqlMdDRlDFt6u1hHGgi7twc4tzDZj00yr7g22fc'
+STRIPE_SECRET_KEY = 'sk_test_51MafUtBqYPEKkMvLBpnogALlZExS9pJzTsB5SuPvcV6gcg0BmnWpMbQUiwwj9x6Qz7gKXrQfOsDJ4ha3M3fBRCym00SjoKfY0I'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -72,6 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.cart',
             ],
         },
     },

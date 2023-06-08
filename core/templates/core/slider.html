@@ -1,0 +1,27 @@
+<!-- banner section start -->
+<div class="banner_section layout_padding">
+    <div class="container">
+        <div id="my_slider" class="carousel slide" data-ride="carousel">
+        
+            <div class="carousel-inner">
+            <div class="carousel-item active">
+                {% for rs in products_slider %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img src="{{ rs.image.url }}" alt="">
+                        <h1 class="{{ rs.title }}">Get Started <br>Your favorite shoping market</h1>
+                        <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- banner section end -->

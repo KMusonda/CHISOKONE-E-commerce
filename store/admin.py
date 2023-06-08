@@ -1,7 +1,7 @@
 from mptt.admin import DraggableMPTTAdmin
 from django.contrib import admin
 
-from .models import Category, Product, Images
+from .models import Category, Product, Images, Order, OrderItem
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'parent', 'status']
@@ -12,6 +12,7 @@ class CategoryAdmin2(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title',
                     'related_products_count', 'related_products_cumulative_count')
     list_display_links = ('indented_title',)
+    prepopulated_fields = {'slug': ('title',)} ## to automatically add slug on product creation
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -47,8 +48,12 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'status','image']
     list_filter = ['category']
+    readonly_fields = ('image_tag',)
     inlines = [ProductImageInline]
+    prepopulated_fields = {'slug': ('title',)} ## to automatically add slug on product creation
 
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images)
+admin.site.register(Order)
+admin.site.register(OrderItem)

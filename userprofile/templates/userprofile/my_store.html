@@ -1,118 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>{% block title %} My Store {% endblock %}</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
+<!doctype html>
 
-      {% load static %}
-      <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="{% static '' %}css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="{% static '' %}images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="{% static '' %}css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="{% static '' %}https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- fonts -->
-      <link href="{% static '' %}https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-      <!-- font awesome -->
-      <link rel="stylesheet" type="text/css" href="{% static '' %}https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <!--  -->
-      <!-- owl stylesheets -->
-      <link href="{% static '' %}https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext" rel="stylesheet">
-      <link rel="stylesheet" href="{% static '' %}css/owl.carousel.min.css">
-      <link rel="stylesoeet" href="{% static '' %}css/owl.theme.default.min.css">
-      <link rel="stylesheet" href="{% static '' %}https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      {% block meta %}
-      {% endblock %}
-   </head>
-   <body>
-   <!-- banner bg main start -->
-    <div class="banner_bg_main">
-      <!-- header top section start -->
-      <div class="logo_section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-1">
-                <div class="logo"><a href="/"><img src="{% static '' %}images/HWT-LOGO.png"></a></div>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>My Store</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body>
+        <nav class="max-w-4xl mx-auto py-4 px-6 flex items-center justify-between bg-teal-600">
+            <div class="logo">
+                <a href="/" class="text-2xl text-white">Vendor</a>
+            </div>
+
+            <div class="search">
+                <form method="get" action="/search/" class="flex items-center space-x-4">
+                    <input type="search" name="query" placeholder="Search..." class="py-2 px-4 rounded-xl">
+                    
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                          </svg>                          
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        <h1 class="text-2xl">My store</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mt-4 px-8 py-4 bg-teal-200 text-teal-800">
+                    {{ message }}
                 </div>
+            {% endfor %}
+        {% endif %}
+
+        <h2 class="mt-6 text-xl">My order items</h2>
+
+        <div class="flex flex-wrap">
+            <div class="w-1/5">
+                <strong>Order ID</strong>
+            </div>
+
+            <div class="w-1/5">
+                <strong>Title</strong>
+            </div>
+
+            <div class="w-1/5">
+                <strong>Quantity</strong>
+            </div>
+
+            <div class="w-1/5">
+                <strong>Price</strong>
+            </div>
+
+            <div class="w-1/5">
+                <strong>Status</strong>
             </div>
         </div>
-    </div>
-          <div class="container">
-                  <div class="header_section_top">
-                      <div class="row">
-                          <div class="col-sm-12">
-                          <div class="custom_menu">
-                              <ul>
-                                  <li><a href="{% url 'logout' %}">Log out</a></li>
-                                  <li><a href="{% url 'add_product' %}">Add Products</a></li>
-                                  <li><a href="{% static '' %}#">New Releases</a></li>
-                                  <li><a href="{% static '' %}#">Today's Deals</a></li>
-                                  <li><a href="{% static '' %}#">Customer Service</a></li>
-                              </ul>
-                          </div>
-                          </div>
-                      </div>
-                  </div>
-          </div>
-    </div>
-    </body>
 
-    {% block content %}
-    <div class="fashion_section">
-        <div id="">
-           <div class="carousel-inner">
-              <div class="carousel-item active">
-                 <div class="container">
-                    <div class="fashion_section_2 flex">
-                        <h1 class="title">Vendor admin - {{ user.username }}</h1>
-                        {% if messages %}
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        {% endif %}
-                        <hr>
-                        {% if products %}
-                            <div class="row">
-                                {% for product in products %}
-                                    <div class="col-lg-4 col-sm-4">
-                                        
-                                        <div class="box_main">
-                                            <a href="{% url 'edit_product' product.id %}">
-                                                <h1 class="shirt_text" style="color:rgb(38, 0, 255);">{% firstof product.user.get_full_name product.user.username %}</h1>
-                                                <hr>
-                                                <h4 class="shirt_text">{{ product.title }}</h4>
-                                                <p class="price_text">Price  <span style="color: #262626;">K{{ product.get_display_price }}</span></p>
-                                                <div class="electronic_img"><img src="{{ product.image.url }}" alt="Image of {{ product.title }}"></div>
-                                                <hr>
-                                                <p><strong>Status:</strong>{{ product.get_status_display }}</p>
-                                            </a>
-                                        </div>
+        {% for order_item in order_items %}
+            <div class="flex flex-wrap">
+                <div class="w-1/4">
+                    <a href="{% url 'my_store_order_detail' order_item.order.id %}">{{ order_item.order.id}}</a>
+                </div>
+
+                <div class="w-1/5">
+                    {{ order_item.product.title }}
+                </div>
+
+                <div class="w-1/5">
+                    {{ order_item.quantity }}
+                </div>
+
+                <div class="w-1/5">
+                    ZMW {{ order_item.get_display_price }}
+                </div>
+
+                <div class="w-1/5">
+                    {{ order_item.status }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <hr>
+
+        <a href="{% url 'add_product' %}" class="mt-6 inline-block py-4 px-8 bg-teal-500 text-white">Add product</a>
+
+        <h2 class="mt-6 text-xl">My products</h2>
+
+        {% if products %}
+            <div class="flex flex-wrap">
+                {% for product in products %}
+                    <div class="product w-1/3 p-2">
+                        <div class="p-4 bg-gray-100">
+                            <a href="{% url 'edit_product' product.id %}">
+                                {% if product.image %}
+                                    <div class="image mb-2">
+                                        <img src="{{ product.image.url }}" alt="Image of {{ product.title }}">
                                     </div>
-                                {% endfor %}
-                            </div>
-                       {% else %}
-                            you dont have any products yet!
-                        {% endif %}
+                                {% endif %}
+
+                                <h2 class="text-xl">{{ product.title }}</h2>
+                                <p class="text-xs text-gray-600">ZMW {{ product.get_display_price }}</p>
+
+                                <hr class="my-3">
+
+                                <p><strong>Status: </strong>{{ product.get_status_display }}</p>
+                            </a>
+                        </div>
                     </div>
-                 </div>
-              </div>
-           </div>
-        </div>
-     </div>
-    {% endblock %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="mt-4 py-4 px-8 bg-gray-200">You don't have any products yet...</p>
+        {% endif %}
+    </body>
+</html>

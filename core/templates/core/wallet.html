@@ -1,7 +1,175 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
-{% block title %}Wallet{% endblock %}
+{% block title %}Welcome{% endblock %}
 
 {% block content %}
-    <h1>Wallet</h1>
+<style>
+   .product_container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+      padding: 20px;
+      width: 100%;
+      max-height: 400px;
+      min-width: 100px;
+      z-index: 1;
+      background-color: whitesmoke;
+   }
+
+   .product_col {
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 5px;
+      padding: 20px;
+      width: 100%;
+      max-height: 400px;
+      min-width: 100px;
+      background-color: whitesmoke;
+      z-index: 1;
+   }
+
+   .card-btn {
+      bottom: 10px;
+      left: 50%;
+      padding: 10px;
+      width: 90%;
+      text-transform: capitalize;
+      border: none;
+      outline: none;
+      background: #fff;
+      border-radius: 5px;
+      transition: 0.5s;
+      cursor: pointer;
+      opacity: 0;
+   }
+
+   .product_col:hover .card-btn {
+   opacity: 1;
+   }
+
+   .card-btn:hover {
+   background: #ff7d7d;
+   color: #fff;
+   }
+
+   .product_info {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+   }
+
+   .product_img {
+      max-height: 100px;
+      height: 350px;
+      width:100%;
+      object-fit: contain;
+      margin-bottom: 15px;
+      position: relative;
+      overflow: hidden;
+   }
+
+   .product_price > small {
+      color: rgb(36, 113, 172);
+   }
+
+   .product_description {
+      margin-left: 20px;
+   }
+
+   .product_description {
+      color: red;
+      font-style: italic
+   }
+
+   .home {
+      background-color: #cbc4c4;
+   }
+
+   .home_row {
+      display: flex;
+      z-index: 1;
+      margin-left: 5px;
+      margin-right: 5px;
+   }
+
+   .swiper {
+      width: 80%;
+      height: fit-content;
+   }
+
+   .swiper-slide img{
+      height: 400px;
+      width: 100%;
+   }
+
+   .img_container {
+      height: 500px;
+      width: 100%;
+      background: #222;
+      z-index: -5;
+      margin-bottom: -50px;
+      mask: linear-gradient(to button, #222, #5a5959);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .swiper .swiper-button-prev, .swiper .swiper-button-next {
+      color: rgb(253, 240, 4);
+   }
+
+   .swiper .swiper-pagination-bullet-active {
+      background: rgb(253, 240, 4);
+   }
+
+   .discount-tag {
+   position: absolute;
+   background: #fff;
+   padding: 5px;
+   border-radius: 5px;
+   color: #ff7d7d;
+   right: 10px;
+   top: 10px;
+   text-transform: capitalize;
+   }
+   h1 {
+    color: #fff;
+   }
+
+</style>
+<div class="home">
+   <div class="home_container">
+      <div class="img_container">
+         <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide"><img src="{% static '' %}img/banner01.jpg" alt=""></div>
+              <div class="swiper-slide"><img src="{% static '' %}img/banner02.jpg" alt=""></div>
+              <div class="swiper-slide"><img src="{% static '' %}img/banner03.jpg" alt=""></div>
+              <div class="swiper-slide"><img src="{% static '' %}img/banner06.jpg" alt=""></div>
+             
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+          
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+         </div>
+      </div>      
+      <div class="home_row">
+         <h1>welcome to vendor, a one place online market</h1>
+      </div>
+      <div class="home_row">
+
+      </div>
+   </div>
+</div>
+
 {% endblock %}

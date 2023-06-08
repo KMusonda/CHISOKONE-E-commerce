@@ -1,0 +1,57 @@
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+
+    <h2>Total cost: </strong>K{{ cart.get_total_cost }}</h2>
+
+    {{ form.as_p }}
+    
+    <button onclick="buy(event)">Checkout</button>
+{% endblock %}
+
+{% block scripts %}
+<script type="application/javascript" src="https://js.stripe.com/v3"></script>
+<script>
+    function buy(event){
+        event.preventDefault();
+
+        let data = {
+            'first_name': document.getElementById('id_first_name').value,
+            'last_name': document.getElementById('id_last_name').value,
+            'email': document.getElementById('id_email').value,
+            'phone_0': document.getElementById('id_phone_0').value,
+            'address': document.getElementById('id_address').value,
+            'city': document.getElementById('id_city').value,
+        }
+
+        let stripe = Stripe('{{ pub_key }}');
+
+        fetch('/cart/checkout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.session.id })
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message)
+            }
+        })
+        .catch(function(error) {
+            alert(error)
+        });
+
+        return false;
+    }
+</script>
+{% endblock %}
